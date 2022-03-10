@@ -1,0 +1,20 @@
+# Virtual Environment
+venv/
+# IDE folder
+/.idea
+# VS Code
+.vscode
+.vscode/*
+# Python Cache
+*.pyc
+/pycache/.pyc
+# Local project debug file
+*.log
+# Static files
+static
+# Pipfile
+Pipfile.lock
+# Migrations
+/migrations/0.py
+assets/uploads
+assets/uploads/*
