@@ -56,7 +56,7 @@ ROOT_URLCONF = 'SpecialZoo.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates', 'templates/layouts'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
