@@ -6,7 +6,7 @@ class Animal(models.Model):
     description = models.CharField(max_length=255, blank=False, null=False)
     gender = models.CharField(max_length=6, blank=False, null=False)
     life_span = models.PositiveIntegerField(blank=False, null=False, validators=[MinValueValidator(1), MaxValueValidator(150)])
-    type_of_bird = models.CharField(blank=False, null=False)
+    type_of_bird = models.CharField(max_length=80, blank=False, null=False)
     family = models.CharField(max_length=255, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
