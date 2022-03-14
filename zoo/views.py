@@ -29,3 +29,8 @@ class CreateRecord(CreateView):
     def form_invalid(self, form):
         messages.error(self.request, "Los datos proporcionados son invalidos")
         return redirect('zoo:home')
+
+class ViewRecord(DetailView):
+    template_name = 'zoo/detail.html'
+    model = Animal
+    context_object_name = 'record'

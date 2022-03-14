@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %} Detalle de animal {% endblock %}
+
+{% block content %}
+    <div id="regions-create-wrapper" class="template-content-wrapper">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6" id="crud-form-card-wrapper">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="https://via.placeholder.com/286x180" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{object.name}}</h5>
+                                    <p class="card-text">{{object.description}}</p>
+                                    <p class="card-text">{{object.family}}</p>
+                                    <p class="card-text">{{object.life_span}}</p>
+                                    <div class="btn-group col-12" role="group">
+                                        <a class="btn btn-outline-success" href="{% url 'zoo:update' record.id  %}">Editar</a>
+                                        <button type="button" data-record-del-url="{% url 'zoo:delete' record.id  %}" class="btn btn-outline-danger record-delete">Borrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
