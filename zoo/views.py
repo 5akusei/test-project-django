@@ -34,3 +34,22 @@ class ViewRecord(DetailView):
     template_name = 'zoo/detail.html'
     model = Animal
     context_object_name = 'record'
+
+class UpdateRecord(UpdateView):
+    template_name = 'zoo/update.html'
+    model = Animal
+    form_class = AnimalForm
+    context_object_name = 'form'
+    success_url = reverse_lazy('zoo:home')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Actualizado correctamente")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.errro(self.request, "Error al actualizar")
+        return redirect('zoo:update')
+
+class DeleteRecord(DeleteView):
+    model = Animal
+    success_url = reverse_lazy('zoo:home')

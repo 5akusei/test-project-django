@@ -15,7 +15,7 @@
         {% block headscripts %}{% endblock %}
 
         <!-- Title -->
-        <title>Soluciones H&M - {% block title %} {% endblock %}</title>
+        <title>Special Zoo - {% block title %} {% endblock %}</title>
     </head>
     <body class="{{request.resolver_match.url_name}} {% if request.user.is_authenticated %} auth{% else %} anon{% endif %}{% block body_classes %}{% endblock %}" {% block body_attrs %} {% endblock %}>
         <!-- <div>{{request|pprint}}</div> -->
