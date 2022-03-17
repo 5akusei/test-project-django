@@ -6,7 +6,10 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-              ¿Estás seguro que deseas eliminar este pato?
+              ¿Estás seguro que deseas eliminar {% if object is not None %} a {{object.name}} 
+              {% else %}
+              este animal
+              {% endif %}?
           </div>
           <div class="modal-footer">
               <form method="post" id="form-delete">

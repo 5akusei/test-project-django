@@ -1,6 +1,9 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %} Detalle de animal {% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/crud.js' %}"></script>
+{% endblock %}
 
 {% block content %}
     <div id="regions-create-wrapper" class="template-content-wrapper">
