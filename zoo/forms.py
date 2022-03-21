@@ -11,5 +11,7 @@ class AnimalForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'form-control'})
         self.fields['description'].widget.attrs.update({'class': 'form-control'})
         self.fields['gender'].widget.attrs.update({'class': 'form-control'})
+        self.fields['size'].widget.attrs.update({'class': "form-control form-select"})
+        self.fields['size'].empty_label = 'Escoja un tamaño'
         self.fields['life_span'].widget.attrs.update({'class': 'form-control', 'max':'150', 'min':'1'})
         self.fields['family'].widget.attrs.update({'class': 'form-control'})

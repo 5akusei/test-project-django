@@ -1,3 +1,4 @@
+import pdb
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -41,6 +42,12 @@ class UpdateRecord(UpdateView):
     form_class = AnimalForm
     context_object_name = 'form'
     success_url = reverse_lazy('zoo:home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['record_id'] = self.kwargs.get('pk')
+
+        return context
 
     def form_valid(self, form):
         messages.success(self.request, "Actualizado correctamente")

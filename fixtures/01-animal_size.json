@@ -1,0 +1,26 @@
+[
+    {
+        "model" : "animal_size.AnimalSize",
+        "pk" : 1,
+        "fields" : {
+            "name":"grande",
+            "description":"Significa que es un animal que mide alrededor de 2 metros de largo"
+        }
+    },
+    {
+        "model" : "animal_size.AnimalSize",
+        "pk" : 2,
+        "fields" : {
+            "name":"mediano",
+            "description":"Significa que es un animal que mide alrededor de 1 metros de largo"
+        }
+    },
+    {
+        "model" : "animal_size.AnimalSize",
+        "pk" : 3,
+        "fields" : {
+            "name":"pequeño",
+            "description":"Significa que es un animal que mide menos de 1 metro de largo"
+        }
+    }
+]
