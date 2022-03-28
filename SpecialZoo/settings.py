@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'zoo',
-    'animal_size'
+    'animal_size',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,7 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'user.User'
 WSGI_APPLICATION = 'SpecialZoo.wsgi.application'
 
 
