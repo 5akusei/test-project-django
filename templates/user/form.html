@@ -10,7 +10,7 @@
             <input type="submit" class="btn btn-primary"
                     value="Guardar">
             {% if record_id %}
-                <a class="btn btn-secondary" href="{% url 'zoo:detail' record_id %}">volver</a>
+                <a class="btn btn-secondary" href="{% url 'user:list' record_id %}">volver</a>
             {% endif %}
         </div>
     </div>
