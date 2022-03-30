@@ -1,10 +1,12 @@
 <div class="crud-form-fields-wrapper">
     <div class="row">
         {% for field in form %}
-            <div class="col-12 mb-3">
-                <label for="id_{{field.name}}" class="form-label">{{field.label}}</label>
-                {{ field }}
-            </div>
+            {% if field.name != "password" %}
+                <div class="col-12 mb-3">
+                    <label for="id_{{field.name}}" class="form-label">{{field.label}}</label>
+                    {{ field }}
+                </div>
+            {% endif %}
         {% endfor %}
         <div class="col-12 crud-submit-button-wrapper">
             <input type="submit" class="btn btn-primary"

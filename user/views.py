@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from user.forms import UserForm
+from user.forms import UserForm, UserFormUpdate
 from user.models import User
 
 class CreateRecord(CreateView):
@@ -31,6 +31,22 @@ class ListRecord(ListView):
     template_name = 'user/list.html'
     context_object_name = 'records'
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if request.method == 'GET':
+                return super().dispatch(request, *args, **kwargs)
+            elif request.method == 'POST':
+                messages.error(request, 'Acción invalida.')
+                return redirect('user:signup')    
+        else:
+            messages.error(request, 'Actualmente no estas loggueado, por favor inicia sesión e intenta de nuevo.')
+            return redirect('user:signup')
+        # if request.method.lower() in self.http_method_names:
+        #     handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+        # else:
+        #     handler = self.http_method_not_allowed
+        # return handler(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = UserForm
@@ -40,7 +56,7 @@ class ListRecord(ListView):
 class UpdateRecord(UpdateView):
     template_name = 'user/update.html'
     model = User
-    form_class = UserForm
+    form_class = UserFormUpdate
     context_object_name = 'form'
     success_url = reverse_lazy('user:list')
 
