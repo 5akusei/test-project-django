@@ -1,7 +1,14 @@
 <div class="crud-form-fields-wrapper">
     <div class="row">
         {% for field in form %}
-            {% if field.name != "password" %}
+            {% if is_update %}
+                {% if field.name != "password" or field.name != "conf-password" %}
+                    <div class="col-12 mb-3">
+                        <label for="id_{{field.name}}" class="form-label">{{field.label}}</label>
+                        {{ field }}
+                    </div>
+                {% endif %}
+            {% else %}
                 <div class="col-12 mb-3">
                     <label for="id_{{field.name}}" class="form-label">{{field.label}}</label>
                     {{ field }}

@@ -44,7 +44,9 @@ class User(AbstractBaseUser):
 
     # A string describing the name of the field on the user model that is used as the unique identifier.
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username',]
+
+    objects = BaseUserManager()
 
     def __str__(self):
         return self.email

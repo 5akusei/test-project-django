@@ -11,7 +11,7 @@
             <ul class="navbar-nav w-100 justify-content-center">
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a href="{% url 'users:logout' %}" class="nav-link">Cerrar sesión</a>                            
+                        <a href="{% url 'user:logout' %}" class="nav-link">Cerrar sesión</a>                            
                     </li>
                 {% else %}
                     <li class="nav-item {% if request.resolver_match.view_name == 'zoo:home' %}active{% endif %}">
