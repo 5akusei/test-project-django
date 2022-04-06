@@ -1,0 +1,18 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.backends import ModelBackend
+import pdb
+from pprint import pprint
+
+class EmailBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None):
+        UserModel = get_user_model()
+        try:
+            user = UserModel.objects.get(email=username)
+            # pdb.set_trace()
+        except UserModel.DoesNotExist:
+            return None
+        else:
+            # if user.check_password(user.password, password):
+            if user.password == password:
+                return user
+        return None

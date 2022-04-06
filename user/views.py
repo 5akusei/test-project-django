@@ -4,9 +4,9 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from user.forms import UserForm, UserFormUpdate, RegistrationForm
+from user.forms import UserForm, UserFormUpdate, LoginForm
 from user.models import User
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 
 class CreateRecord(CreateView):
     template_name = 'user/sign_up.html'
@@ -52,10 +52,10 @@ class ListRecord(ListView):
                 return super().dispatch(request, *args, **kwargs)
             elif request.method == 'POST':
                 messages.error(request, 'Acción invalida.')
-                return redirect('user:signup')    
+                return redirect('user:login')    
         else:
-            messages.error(request, 'Actualmente no estas loggueado, por favor inicia sesión e intenta de nuevo.')
-            return redirect('user:signup')
+            messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
+            return redirect('user:login')
         # if request.method.lower() in self.http_method_names:
         #     handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
         # else:
@@ -95,4 +95,24 @@ class DeleteRecord(DeleteView):
 
 def logout_view(request):
     logout(request)
-    # Redirect to a success page.
+    messages.success(request, 'Sesión Cerrada')
+    return redirect('user:login')
+
+def login_page(request):
+    form = LoginForm()
+    message = ''
+    context={'form': form, 'message': message}
+    if request.method == 'POST':
+        
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(
+                username = form.cleaned_data['email'],
+                password = form.cleaned_data['password'],
+            )
+            # pdb.set_trace()
+            if user is not None:
+                login(request, user)
+                return redirect('zoo:home')
+        message = 'Login failed!'
+    return render(request, 'user/login.html', context)

@@ -9,18 +9,18 @@
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6" id="crud-form-card-wrapper">
                     <div class="row">
                         <div class="col-12">
-                            <h1>Nuevo usuario</h1>
+                            <h1>Iniciar Sesión</h1>
                         </div>
                         <div class="col-12" id="crud-form-wrapper">
                             {% if form and form is not None %}
-                                <form action="{# url 'user:signup' #}" method="post">
+                                <form action="{# url 'user:login' #}" method="post">
                                     {% csrf_token %}
                                     {% include "user/form.html" %}
                                 </form>
                             {% else %}
                                 <div class="p-5 mb-4 bg-dark rounded-3">
                                     <h2 class="text-center text-white">
-                                        Ha ocurrido un error en la creación del registro, por favor inténtelo mas tarde.
+                                        Ha ocurrido un error en el inicio de sesión, por favor inténtelo mas tarde.
                                     </h2>
                                 </div>
                             {% endif %}
