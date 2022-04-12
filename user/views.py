@@ -154,3 +154,25 @@ class Index(TemplateView):
         else:
             messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
             return redirect('user:login')
+
+
+# if request.method == 'GET':
+#     if request.user.is_authenticated and request.user.is_active:
+#         if request.user.is_admin or request.user.is_staff:
+#             return super().dispatch(request, *args, **kwargs)
+#         else:
+#             messages.error(request, 'No estas autorizado.')
+#             return redirect('user:index')    
+#     else:
+#         messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
+#         return redirect('user:login')
+# elif request.method == 'POST':
+#     if request.user.is_authenticated and request.user.is_active:
+#         if request.user.is_admin:
+#             return super().dispatch(request, *args, **kwargs)
+#         else:
+#             messages.error(request, 'No estas autorizado.')
+#             return redirect('user:index')    
+#     else:
+#         messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
+#         return redirect('user:login')
