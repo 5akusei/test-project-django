@@ -8,15 +8,20 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse w-100" id="main-menu-navbar-collapse">
-            <ul class="navbar-nav w-100 justify-content-center">
+            <ul class="navbar-nav w-100 justify-content-center">	
+                <li class="nav-item {% if request.resolver_match.view_name == 'zoo:home' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'zoo:home' %}">Inicio</a>
+                </li>                  
+                <li class="nav-item">
+                    <a href="{% url 'user:list' %}" class="nav-link">lista</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{request.META.HTTP_REFERER|escape}}" class="nav-link">Back</a>
+                </li>
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a href="{% url 'user:logout' %}" class="nav-link">Cerrar sesión</a>                            
+                        <a href="{% url 'user:logout' %}" class="nav-link">Cerrar sesión</a>
                     </li>
-                {% else %}
-                    <li class="nav-item {% if request.resolver_match.view_name == 'zoo:home' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'zoo:home' %}">Inicio</a>
-                    </li>                  
                 {% endif %}
             </ul>
       </div>
