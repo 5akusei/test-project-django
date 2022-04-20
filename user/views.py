@@ -7,6 +7,11 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView, T
 from user.forms import UserForm, UserFormUpdate, LoginForm
 from user.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.crypto import get_random_string
+# from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+# from django.utils.encoding import force_bytes, force_str, force_str, force_text, DjangoUnicodeDecodeError
 
 class ListRecord(ListView):
     queryset = User.objects.order_by('date_joined')
@@ -49,9 +54,10 @@ class CreateRecord(CreateView):
         conf_password = self.request.POST.get('conf_password', None)
         if password and conf_password:
             if password == conf_password:
-                # pdb.set_trace()
                 # email = self.request.POST.get('email', None)
                 # user_session = authenticate(email=email, password=password)
+                # form.cleaned_data['user_code'] = get_random_string(length=60)
+                # pdb.set_trace()
                 user_instance = form.save()
                 login(self.request, user_instance)
                 messages.success(self.request, 'Registro exitoso')
@@ -155,7 +161,57 @@ class Index(TemplateView):
             messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
             return redirect('user:login')
 
+# ====================================================================================
 
+def send_activation_email(user, request):
+    current_site = get_current_site(request)
+    email_subject = "Activate your account"
+    email_body = render_to_string('user/acc_active_email.html', {
+        'user': user,
+        'domain': current_site,
+
+    })
+
+class CreateRecordWithEmailConfirm(CreateView):
+    template_name = 'user/sign_up.html'
+    context_object_name = 'form'
+    form_class = UserForm
+    # form_class = RegistrationForm
+    success_url = reverse_lazy('zoo:home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_update'] = False
+        
+        return context
+
+    def form_valid(self, form):
+        password = self.request.POST.get('password', None)
+        conf_password = self.request.POST.get('conf_password', None)
+        if password and conf_password:
+            if password == conf_password:
+                user_instance = form.save()
+                setattr(user_instance,'user_code',get_random_string(length=60))
+
+                send_activation_email(user_instance, self.request)
+                
+                if not user_instance.is_active:
+                    messages.error(self.request, 'Por favor revisa tu correo para activar tu cuenta')
+                    return redirect('user:login')
+
+
+                login(self.request, user_instance)
+                messages.success(self.request, 'Registro exitoso')
+                return super().form_valid(form)
+        return super().form_invalid(form)
+
+    def form_invalid(self, form):
+        # pdb.set_trace()
+        messages.error(self.request, "Los datos proporcionados son invalidos")
+        return redirect('user:signup')
+
+# ====================================================================================
+# TODO: revizar la verificación
 # if request.method == 'GET':
 #     if request.user.is_authenticated and request.user.is_active:
 #         if request.user.is_admin or request.user.is_staff:
