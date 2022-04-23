@@ -10,6 +10,9 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+from django.conf import settings
 # from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 # from django.utils.encoding import force_bytes, force_str, force_str, force_text, DjangoUnicodeDecodeError
 
@@ -118,6 +121,7 @@ class DeleteRecord(DeleteView):
             messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
             return redirect('user:login')
 
+# TODO: revisar por que no funciona correctamente
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
@@ -161,6 +165,20 @@ class Index(TemplateView):
             messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
             return redirect('user:login')
 
+def activation_user(request, uid):
+    try:
+        user = User.objects.get(user_code=uid)
+    except Exception as e:
+        user = None
+
+    if user:
+        user.is_active = True
+        user.user_code = ''
+        user.save()
+        messages.success(request, 'Confirmación de registro exitosa, inicia sesión')
+        return redirect('user:login')
+
+    return render(request, 'user/activation_failed.html')
 # ====================================================================================
 
 def send_activation_email(user, request):
@@ -169,8 +187,11 @@ def send_activation_email(user, request):
     email_body = render_to_string('user/acc_active_email.html', {
         'user': user,
         'domain': current_site,
-
+        'uid': user.user_code,
     })
+
+    email_message = EmailMessage(subject=email_subject, body=email_body, from_email=settings.EMAIL_HOST_USER, to=[user.email])
+    email_message.send(fail_silently=False)
 
 class CreateRecordWithEmailConfirm(CreateView):
     template_name = 'user/sign_up.html'
@@ -192,7 +213,7 @@ class CreateRecordWithEmailConfirm(CreateView):
             if password == conf_password:
                 user_instance = form.save()
                 setattr(user_instance,'user_code',get_random_string(length=60))
-
+                user_instance.save()
                 send_activation_email(user_instance, self.request)
                 
                 if not user_instance.is_active:
