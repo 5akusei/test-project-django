@@ -1,5 +1,5 @@
 {% autoescape off %}
 Hi {{ user.username }},
-Por favor haz click en el enlace para confirmar tu registro,
-http://{{ domain }}{% url 'user:activate' uid=uid %}
+Este es tu codigo de activación <strong>{{user.user_active_code}}</strong>
+Por favor, <a href="http://{{ domain }}{% url 'user:activate' uid=uid %}"> haz click aquí </a>  para continuar con tu registro.
 {% endautoescape %}

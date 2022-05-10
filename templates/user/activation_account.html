@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} Activar usuario {% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-4">
+                <h1 class="h3 mb-3">Digita tu codigo de activación</h1>
+                {% if is_valid_user %}
+                    <form method="post" class="text-align-center">
+                        {% csrf_token %}
+                        <input type="number" class="form-control" name="active_code" id="active_code">
+                        <button class="btn btn-primary mt-3 col-4" type="submit">Enviar</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

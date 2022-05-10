@@ -41,7 +41,8 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    user_code = models.CharField(verbose_name='code', default='', max_length=80)
+    user_active_url_code = models.CharField(default='', max_length=60)
+    user_active_code = models.CharField(default='', max_length=6)
 
     # A string describing the name of the field on the user model that is used as the unique identifier.
     USERNAME_FIELD = 'email'

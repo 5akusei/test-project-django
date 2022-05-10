@@ -1,5 +1,8 @@
 import pdb
 from pprint import pprint
+from random import randint
+from tkinter import NO
+from turtle import pd
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -10,11 +13,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
-from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.conf import settings
-# from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-# from django.utils.encoding import force_bytes, force_str, force_str, force_text, DjangoUnicodeDecodeError
 
 class ListRecord(ListView):
     queryset = User.objects.order_by('date_joined')
@@ -165,21 +165,52 @@ class Index(TemplateView):
             messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
             return redirect('user:login')
 
-def activation_user(request, uid):
-    try:
-        user = User.objects.get(user_code=uid)
-    except Exception as e:
-        user = None
-
-    if user:
-        user.is_active = True
-        user.user_code = ''
-        user.save()
-        messages.success(request, 'Confirmación de registro exitosa, inicia sesión')
-        return redirect('user:login')
-
-    return render(request, 'user/activation_failed.html')
 # ====================================================================================
+class VerificationActivationCode(TemplateView):
+    template_name = 'user/activation_account.html'
+    # pdb.set_trace()
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            try:
+                user = User.objects.get(user_active_url_code=self.kwargs.get('uid'))
+            except Exception as e: 
+                user = None
+            
+            if user is None:
+                messages.error(self.request, 'El usuario con ese codigo no existe')
+                
+            return super().dispatch(request, *args, **kwargs)
+
+        if request.method == 'POST':
+            try:
+                user = User.objects.get(user_active_url_code=self.kwargs.get('uid'))
+            except Exception as e:
+                user = None
+            
+            if user:
+                if request.POST['active_code'] == user.user_active_code:
+                    user.is_active = True
+                    user.user_active_code = ''
+                    user.user_active_url_code = ''
+                    user.save()
+                    return redirect('user:login')
+                else:
+                    messages.error(self.request, 'Codigo invalido, por favor asegurate de que sea correcto')
+                    return redirect(request.path)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_valid_user'] = True
+
+        try:
+            user = User.objects.get(user_active_url_code=self.kwargs.get('uid'))
+        except Exception as e: 
+            user = None
+
+        if user is None:
+            context['is_valid_user'] = False
+        
+        return context
 
 def send_activation_email(user, request):
     current_site = get_current_site(request)
@@ -187,17 +218,17 @@ def send_activation_email(user, request):
     email_body = render_to_string('user/acc_active_email.html', {
         'user': user,
         'domain': current_site,
-        'uid': user.user_code,
+        'uid': user.user_active_url_code,
     })
 
     email_message = EmailMessage(subject=email_subject, body=email_body, from_email=settings.EMAIL_HOST_USER, to=[user.email])
+    email_message.content_subtype = "html"
     email_message.send(fail_silently=False)
 
 class CreateRecordWithEmailConfirm(CreateView):
     template_name = 'user/sign_up.html'
     context_object_name = 'form'
     form_class = UserForm
-    # form_class = RegistrationForm
     success_url = reverse_lazy('zoo:home')
 
     def get_context_data(self, **kwargs):
@@ -212,7 +243,8 @@ class CreateRecordWithEmailConfirm(CreateView):
         if password and conf_password:
             if password == conf_password:
                 user_instance = form.save()
-                setattr(user_instance,'user_code',get_random_string(length=60))
+                setattr(user_instance,'user_active_url_code',get_random_string(length=60))
+                setattr(user_instance,'user_active_code',randint(100000, 999999))
                 user_instance.save()
                 send_activation_email(user_instance, self.request)
                 
@@ -227,7 +259,6 @@ class CreateRecordWithEmailConfirm(CreateView):
         return super().form_invalid(form)
 
     def form_invalid(self, form):
-        # pdb.set_trace()
         messages.error(self.request, "Los datos proporcionados son invalidos")
         return redirect('user:signup')
 
