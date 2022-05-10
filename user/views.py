@@ -16,6 +16,7 @@ from django.utils.crypto import get_random_string
 from django.core.mail import EmailMessage
 from django.conf import settings
 
+# TODO: Reordenar todo
 class ListRecord(ListView):
     queryset = User.objects.order_by('date_joined')
     template_name = 'user/list.html'
