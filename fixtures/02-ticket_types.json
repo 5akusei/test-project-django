@@ -1,0 +1,57 @@
+[
+    {
+        "model" : "tickets.Ticket",
+        "pk" : 1,
+        "fields" : {
+            "name":"Adventure pass",
+            "description":"Con este pase puedes ir a todas las zonas del parque",
+            "value": 9.99,
+            "img_url": "https://t1.ev.ltmcdn.com/es/posts/8/8/1/tipos_de_biomas_terrestres_2188_600.jpg",
+            "created_at": "2022-03-05 11:47:25.979104-06"
+        }
+    },
+    {
+        "model" : "tickets.Ticket",
+        "pk" : 2,
+        "fields" : {
+            "name":"African pass",
+            "description":"Con este pase puedes ir a la zona africana y a la zona global",
+            "value": 5.99,
+            "img_url": "https://thumbs.dreamstime.com/b/sabana-africana-84518924.jpg",
+            "created_at": "2022-03-04 11:47:25.979104-06"
+        }
+    },
+    {
+        "model" : "tickets.Ticket",
+        "pk" : 3,
+        "fields" : {
+            "name":"Arctic pass",
+            "description":"Con este pase puedes ir a la zona artica y a la zona global",
+            "value": 5.99,
+            "img_url": "https://elmedicointeractivo.com/wp-content/uploads/2019/11/artico.jpg",
+            "created_at": "2022-03-03 11:47:25.979104-06"
+        }
+    },
+    {
+        "model" : "tickets.Ticket",
+        "pk" : 4,
+        "fields" : {
+            "name":"National pass",
+            "description":"Con este pase puedes ir a la zona de fauna nacional y a la zona global",
+            "value": 5.99,
+            "img_url": "https://ojoalclima.com/wp-content/uploads/2016/10/15603811081_fc307ebdee_k-1080x675.jpg",
+            "created_at": "2022-03-02 11:47:25.979104-06"
+        }
+    },
+    {
+        "model" : "tickets.Ticket",
+        "pk" : 5,
+        "fields" : {
+            "name":"Ocean pass",
+            "description":"Con este pase puedes ir a la zona marítima y a la zona global",
+            "value": 5.99,
+            "img_url": "https://images.theconversation.com/files/223729/original/file-20180619-126566-1jxjod2.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=900.0&fit=crop",
+            "created_at": "2022-03-01 11:47:25.979104-06"
+        }
+    }
+]

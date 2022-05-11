@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Tipos de Pases {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Lista de los Pases</h2>
+        <div class="row">
+            <div class="col-12">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    {% if records.all.count > 0 %}
+                        {% for record in records %}
+                            <div class="card bg-dark text-white">
+                                <img src={{ record.img_url }} class="card-img" alt="...">
+                                <div class="card-img-overlay">
+                                    <h5 class="card-title">{{ record.name }}</h5>
+                                    <p class="card-text">{{record.description}}</p>
+                                    <p class="card-text">{{record.value}}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p colspan="9" style="text-align: center;">No hay usuarios</p>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
