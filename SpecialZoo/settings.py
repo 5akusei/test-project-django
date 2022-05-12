@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'zoo',
     'animal_size',
     'user',
-    'tickets'
+    'tickets',
+    'zones'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,54 @@
+[
+    {
+        "model" : "zones.Zone",
+        "pk" : 1,
+        "fields" : {
+            "name":"Zona Oceánica",
+            "description":"Esta es una zona donde se pueden ver animales que tienen como principal habitat lugares acuaticos",
+            "value": 5.99,
+            "max_capacity": 5000,
+            "img_url": "https://images.theconversation.com/files/223729/original/file-20180619-126566-1jxjod2.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=900.0&fit=crop",
+            "created_at": "2022-03-01 11:47:25.979104-06",
+            "updated_at": "2022-03-01 11:47:25.979104-06"
+        }
+    },
+    {
+        "model" : "zones.Zone",
+        "pk" : 2,
+        "fields" : {
+            "name":"Zona Nacional",
+            "description":"Esta es una zona donde se pueden ver animales endémicos del país",
+            "value": 5.99,
+            "max_capacity": 5000,
+            "img_url": "https://ojoalclima.com/wp-content/uploads/2016/10/15603811081_fc307ebdee_k-1080x675.jpg",
+            "created_at": "2022-03-02 11:47:25.979104-06",
+            "updated_at": "2022-03-02 11:47:25.979104-06"
+        }
+    },
+    {
+        "model" : "zones.Zone",
+        "pk" : 3,
+        "fields" : {
+            "name":"Zona Ártica",
+            "description":"Esta es una zona donde se pueden ver animales adaptados a un clima frío",
+            "value": 5.99,
+            "max_capacity": 5000,
+            "img_url": "https://elmedicointeractivo.com/wp-content/uploads/2019/11/artico.jpg",
+            "created_at": "2022-03-03 11:47:25.979104-06",
+            "updated_at": "2022-03-03 11:47:25.979104-06"
+        }
+    },
+    {
+        "model" : "zones.Zone",
+        "pk" : 4,
+        "fields" : {
+            "name":"Zona Africana",
+            "description":"Esta es una zona donde se pueden ver animales originarios de África, en su mayoría de la sabana africana",
+            "value": 5.99,
+            "max_capacity": 5000,
+            "img_url": "https://thumbs.dreamstime.com/b/sabana-africana-84518924.jpg",
+            "created_at": "2022-03-04 11:47:25.979104-06",
+            "updated_at": "2022-03-04 11:47:25.979104-06"
+        }
+    }
+]

@@ -1,10 +1,10 @@
 from django.views.generic import ListView
-from tickets.models import Ticket
+from zones.models import Zone
 from django.contrib import messages
 from django.shortcuts import redirect
 
 class Index(ListView):
-    queryset = Ticket.objects.order_by('created_at')
+    queryset = Zone.objects.order_by('created_at')
     template_name = 'ticket/index.html'
     context_object_name = 'records'
 
