@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %} Selección de la fecha {% endblock %}
+
+{% block content %}
+    <div id="regions-create-wrapper" class="template-content-wrapper">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6" id="crud-form-card-wrapper">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Elección de la fecha</h1>
+                        </div>
+                        <div class="col-12" id="crud-form-wrapper">
+                            {% if form and form is not None %}
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {% include "ticket/form.html" %}
+                                </form>
+                            {% else %}
+                                <div class="p-5 mb-4 bg-dark rounded-3">
+                                    <h2 class="text-center text-white">
+                                        Ha ocurrido un error en la creación del registro, por favor inténtelo mas tarde.
+                                    </h2>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'animal_size',
     'user',
     'tickets',
-    'zones'
+    'zones',
+    'cart'
 ]
 
 MIDDLEWARE = [

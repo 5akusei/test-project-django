@@ -11,16 +11,17 @@
                     {% if records.all.count > 0 %}
                         {% for record in records %}
                             <div class="card bg-dark text-white">
-                                <img src={{ record.img_url }} class="card-img" alt="...">
+                                <img src={{ record.img_url }} class="card-img" alt="{{ record.name }}">
                                 <div class="card-img-overlay">
                                     <h5 class="card-title">{{ record.name }}</h5>
                                     <p class="card-text">{{record.description}}</p>
                                     <p class="card-text">{{record.value}}</p>
+                                    <a class="btn btn-outline-dark mb-3" href="{% url 'ticket:calendar' record.id %}">Comprar entrada</a>
                                 </div>
                             </div>
                         {% endfor %}
                     {% else %}
-                        <p colspan="9" style="text-align: center;">No hay usuarios</p>
+                        <p colspan="9" style="text-align: center;">No hay entradas</p>
                     {% endif %}
                     
                 </div>
