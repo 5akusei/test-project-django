@@ -3,30 +3,47 @@
 {% block title %} Tipos de Pases {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h2>Lista de los Pases</h2>
-        <div class="row">
-            <div class="col-12">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    {% if records.all.count > 0 %}
-                        {% for record in records %}
-                            <div class="card bg-dark text-white">
-                                <img src={{ record.img_url }} class="card-img" alt="{{ record.name }}">
-                                <div class="card-img-overlay">
-                                    <h5 class="card-title">{{ record.name }}</h5>
-                                    <p class="card-text">{{record.description}}</p>
-                                    <p class="card-text">{{record.value}}</p>
-                                    <a class="btn btn-outline-dark mb-3" href="{% url 'ticket:calendar' record.id %}">Comprar entrada</a>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        <p colspan="9" style="text-align: center;">No hay entradas</p>
-                    {% endif %}
-                    
+    <div id="regions-create-wrapper" class="template-content-wrapper">
+        <div class="container pb-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Seleccion de las entradas</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3">
+                            <h2>Escoja la fecha deseada:</h2>
+                            <input class="form-control" type="date" name="reserved_date" id="reserved_date">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Escoja el tipo deseado:</h2>
+                            {% if records.all.count > 0 %}
+                                {% for record in records %}
+                                <div class="card d-inline-block" style="width: 320px;">
+                                    <img class="card-img-top" data-src="holder.js/100px180/" alt="100%x180" style="height: 420px; width: 100%; display: block;" src={{ record.img_url }} data-holder-rendered="true">
+                                    <div class="card-body">
+                                      <h5 class="card-title">{{ record.name }}</h5>
+                                      <button id="tt_{{ record.id }}" class="btn btn-primary col-12">Add</button>
+                                    </div>
+                                  </div>
+                                {% endfor %}
+                            {% else %}
+                                <p colspan="9" style="text-align: center;">No hay entradas</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 p-5 d-flex justify-content-between">
+                    <a class="btn btn-secondary" href="{% url 'user:index' %}">Volver</a>
+                    <a class="btn btn-primary" href="">Seguir</a>
                 </div>
             </div>
         </div>
     </div>
-    
 {% endblock %}

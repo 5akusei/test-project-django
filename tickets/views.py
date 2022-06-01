@@ -10,7 +10,7 @@ from zones.models import Zone
 from tickets.models import Ticket, TicketType
 
 class Index(ListView):
-    queryset = Zone.objects.order_by('created_at')
+    queryset = TicketType.objects.order_by('created_at')
     template_name = 'ticket/index.html'
     context_object_name = 'records'
 
@@ -21,25 +21,20 @@ class Index(ListView):
                 return super().dispatch(request, *args, **kwargs)
             elif request.method == 'POST':
                 messages.error(request, 'Acción invalida.')
-                return redirect('ticket:index')    
+                return redirect('user:index')    
         else:
             messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
             return redirect('user:login')
 
 class CreateTicket(FormView):
     template_name = 'ticket/ticket_step01.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['pass_type'] = TicketType.objects.all()
-
-        return context
+    context_object_name = 'form'
+    form_class = CalendarForm
     
     # Validates
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             if request.method == 'GET':
-                # pdb.set_trace()
                 return super().dispatch(request, *args, **kwargs)
             elif request.method == 'POST':
                 zona = Zone.objects.get(id=self.kwargs.get('pk'))
