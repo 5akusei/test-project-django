@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %} Tipos de Pases {% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/tickets.js' %}"></script>
+{% endblock %}
 
 {% block content %}
     <div id="regions-create-wrapper" class="template-content-wrapper">
@@ -27,7 +30,7 @@
                                     <img class="card-img-top" data-src="holder.js/100px180/" alt="100%x180" style="height: 420px; width: 100%; display: block;" src={{ record.img_url }} data-holder-rendered="true">
                                     <div class="card-body">
                                       <h5 class="card-title">{{ record.name }}</h5>
-                                      <button id="tt_{{ record.id }}" class="btn btn-primary col-12">Add</button>
+                                      <button tt_id="{{ record.id }}" class="btn btn-primary add_button col-12">Add</button>
                                     </div>
                                   </div>
                                 {% endfor %}
