@@ -8,6 +8,8 @@ from django.views.generic import ListView, FormView, UpdateView
 from tickets.forms import CalendarForm, PayInfoForm
 from zones.models import Zone
 from tickets.models import Ticket, TicketType
+from django.http import JsonResponse
+import json
 
 class Index(ListView):
     queryset = TicketType.objects.order_by('created_at')
@@ -20,8 +22,8 @@ class Index(ListView):
             if request.method == 'GET':
                 return super().dispatch(request, *args, **kwargs)
             elif request.method == 'POST':
-                messages.error(request, 'Acción invalida.')
-                return redirect('user:index')    
+                # pdb.set_trace()
+                return JsonResponse(json.loads(request.body.decode('utf-8')))
         else:
             messages.error(request, 'Por favor inicia sesión e intenta de nuevo.')
             return redirect('user:login')

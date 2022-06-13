@@ -32,8 +32,9 @@
                                       <h5 class="card-title">{{ record.name }}</h5>
                                       <button tt_id="{{ record.id }}" class="btn btn-primary add_button col-12">Add</button>
                                     </div>
-                                  </div>
+                                </div>
                                 {% endfor %}
+                                {% csrf_token %}
                             {% else %}
                                 <p colspan="9" style="text-align: center;">No hay entradas</p>
                             {% endif %}
